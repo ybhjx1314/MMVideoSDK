@@ -7,14 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
-@class MLFilterDescriptor;
-@class GPUImageOutput;
-@protocol GPUImageInput;
-@protocol MLFilterUpdating;
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface MDRecordFilter : NSObject
+@interface MDRecordFilter : NSObject  <NSCopying>
 
 @property (readonly) NSURL *contentsOfURL;
 @property (readonly) NSString *identifier;
@@ -28,40 +24,11 @@ NS_ASSUME_NONNULL_BEGIN
 // 创建原图Filter
 + (MDRecordFilter *)createOriginalEffectFilter;
 
-// Make GPUImageFilter with lazy loading
-- (GPUImageOutput<GPUImageInput> *)makeGPUImageFilter;
-
-- (GPUImageOutput<MLFilterUpdating> *)makeGPUImageFilterA;
-- (GPUImageOutput<MLFilterUpdating> *)makeGPUImageFilterB;
-
 // Processes the specified image using the receiver synchronously
 - (UIImage *)imageByProcessImage:(UIImage *)image;
 
-// Processes the specified image using the receiver asynchronously, the completionHandler called on the main thread
-- (void)processImage:(UIImage *)image completionHandler:(void (^)(UIImage *outputImage))completionHandler;
-
 - (void)setLutIntensity:(CGFloat)intensity;
 - (CGFloat)getLutIntensity;
-
-@end
-
-@interface MDRecordFilter (Copying) <NSCopying>
-
-@end
-
-@interface MDRecordFilter (Equal)
-
-@end
-
-@interface MDRecordFilter (ProcessingQueue)
-
-+ (NSOperationQueue *)globalProcessingQueue;
-
-@end
-
-@interface MDRecordFilterBlender : NSObject
-
-+ (nullable UIImage *)imageByBlendImage:(UIImage *)image withOverlayImage:(UIImage *)overlayImage;
 
 @end
 

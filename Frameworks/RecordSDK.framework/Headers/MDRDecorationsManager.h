@@ -6,7 +6,6 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "MDRGift.h"
 #import "FDKDecoration+MDRDetectorRequirements.h"
 #import "MDRDetectorRequirements.h"
 
@@ -17,11 +16,6 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, readonly, nullable) FDKDecoration *decoration;
 
 - (void)updateFaceDecoration:(FDKDecoration * _Nullable)decoration;
-
-- (void)addGift:(MDRGift *)gift;
-- (void)removeGift:(NSString *)giftID;
-
-- (void)clearAllGifts;
 
 - (void)clearAll;
 

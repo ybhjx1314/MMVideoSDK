@@ -18,6 +18,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, readonly) BOOL mdr_enableImageSegmenter;
 @property (nonatomic, readonly) BOOL mdr_enableObjectDetector;
 @property (nonatomic, readonly) BOOL mdr_enableHandGestureDetector;
+@property (nonatomic, readonly) BOOL mdr_enableFaceSegmenter;
+@property (nonatomic, readonly) BOOL mdr_isDisco;
 @property (nonatomic, readonly) NSUInteger mdr_handGestureType;
 
 @property (nonatomic, readonly) NSUInteger mdr_facialDistortionsCount;

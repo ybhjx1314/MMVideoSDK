@@ -9,7 +9,6 @@
 #import <CoreMedia/CoreMedia.h>
 #import "MDRStickerProtocol.h"
 
-@class FDKDecorationFilterOptions, FDKDecorationFilter;
 @protocol FDKObjectFeature;
 
 NS_ASSUME_NONNULL_BEGIN
@@ -38,19 +37,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nonatomic, assign) CGRect bounds;
 @property (nonatomic, assign) CGFloat roll;
+@property (nonatomic, readonly) NSString *type;
 
-- (instancetype)init NS_UNAVAILABLE;
-- (instancetype)initWithDecorationURL:(NSURL *)url
-                       inputFrameSize:(CGSize)inputFrameSize
-              decorationFilterOptions:(FDKDecorationFilterOptions *)decorationFilterOptions NS_DESIGNATED_INITIALIZER;
 - (instancetype)initWithDecorationURL:(NSURL *)url inputFrameSize:(CGSize)inputFrameSize;
-
-@property (nonatomic, assign) CMTimeRange duration;
-
-- (FDKDecorationFilter *)makeFilter;
-- (void)update;
-
-- (CGSize)stickerSize;
 
 @end
 

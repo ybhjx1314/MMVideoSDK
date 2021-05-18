@@ -26,6 +26,7 @@ typedef NS_ERROR_ENUM(MDRAuthenticationErrorDomain, MDRAutorizationError) {
 typedef NS_ERROR_ENUM(MDRImageProcessErrorDomain, MDRImageProcessError) {
     MDRImageProcessErrorUnknown = -301,
     
+	MDRImageProcessErrorImageInvalid = -302,
     MDRImageProcessErrorRenderFrameError = -350
 };
 
@@ -35,6 +36,13 @@ typedef NS_ERROR_ENUM(MDRVideoProcessErrorDomain, MDRVideoProcessError) {
     MDRVideoProcessErrorExportSessionUnknown = -402,
     MDRVideoProcessErrorExportSessionInitializeFailed = -403,
     MDRVideoProcessErrorExportSessionCancelled = -404,
+	
+	MDRVideoProcessErrorLoadFaceDetector = -500,
+	MDRVideoProcessErrorLoadBodyDetector = -501,
+	
+	MDRVideoProcessErrorVideoReverse = -600,
+	
+	MDRVideoProcessErrorNoVideoTrack = -700,
     
     MDRVideoProcessErrorPrepare = 205001,
     MDRVideoProcessErrorMakeVideo,

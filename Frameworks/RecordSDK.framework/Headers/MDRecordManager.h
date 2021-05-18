@@ -7,12 +7,12 @@
 
 #import <Foundation/Foundation.h>
 
-@protocol MDRIRecordLogger;
+@protocol MDRIRecordLogger, MDLoggerService;
 
 extern NSString * const _Nonnull __kMMVideoSDKTag__;
 
 #ifdef DEBUG
-#define MDRLog(fmt, ...) autoreleasepool {} 
+#define MDRLog(fmt, ...) autoreleasepool {} __MDLogDebugTag(__kMMVideoSDKTag__, fmt, ##__VA_ARGS__)
 #else
 #define MDRLog(fmt, ...) try {} @catch (...) {} 
 #endif
@@ -30,6 +30,9 @@ NS_ASSUME_NONNULL_BEGIN
 + (NSString *)version;
 
 + (NSString *)appToken;
+
++ (void)setUserId:(NSString *)userId;
++ (NSString *)userId;
 
 + (void)configLogger:(id<MDRIRecordLogger> _Nullable)logger;
 + (id<MDRIRecordLogger> _Nullable)logger;

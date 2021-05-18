@@ -7,7 +7,7 @@
 
 #import <Foundation/Foundation.h>
 #import "MDImageDetectorProtocol.h"
-@import MomoCV;
+#import <MomoCV/MomoCV.h>
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -26,6 +26,18 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, readonly) NSArray<NSNumber *> *skinColorThreshold;
 
 @property (nonatomic, assign) BOOL advancedStabilizationModeEnabled;
+
+@end
+
+@interface MDFace137DetectorContext: MDFaceDetectorContext
+
+@end
+
+@interface MDFace240DetectorContext : MDFaceDetectorContext
+
+@end
+
+@interface MDFaceLocalDetectorContext : MDFaceDetectorContext
 
 @end
 

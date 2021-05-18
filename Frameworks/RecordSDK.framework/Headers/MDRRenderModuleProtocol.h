@@ -21,6 +21,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic) float thinFaceFactor;  // 瘦脸
 @property (nonatomic) float skinSmoothingFactor; // 磨皮
 @property (nonatomic) float skinWhitenFactor; // 美白
+@property (nonatomic) float skinRuddyFactor; // 红润
 
 //瘦身美腿相关 (0 - 1)
 @property (nonatomic) float bodyWidthFactor;  // 瘦身
@@ -46,6 +47,20 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (atomic, assign) BOOL enable3D;
 @property (nonatomic, assign) BOOL enableAIBeauty;
+
+@end
+
+@protocol MDRRenderModuleTouchEvent <NSObject>
+
+- (BOOL)hitTestTouch:(CGPoint)point withView:(UIView *)view;
+
+- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event;
+
+- (void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event;
+
+- (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event;
+
+- (void)touchesCancelled:(NSSet *)touches withEvent:(UIEvent *)event;
 
 @end
 

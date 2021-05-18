@@ -7,7 +7,7 @@
 
 #import <Foundation/Foundation.h>
 #import <CoreVideo/CoreVideo.h>
-@import MLMediaFoundation;
+#import <MLMediaFoundation/MLMediaFoundation.h>
 
 NS_ASSUME_NONNULL_BEGIN
 

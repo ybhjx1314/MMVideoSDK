@@ -23,4 +23,15 @@ NS_ASSUME_NONNULL_BEGIN
 
 @end
 
+@interface MDVideoCompositeExport (Expend)
+
+- (id<MDCancellable> _Nullable)exportToURL:(NSURL *)url
+                               composition:(AVComposition *)composition
+                                  audioMix:(AVAudioMix *)audioMix
+                           progressHandler:(void(^ _Nullable)(double progress))progressHandler
+                                completion:(void(^ _Nullable)(NSURL *url))completion
+                                   failure:(void(^ _Nullable)(NSError * _Nullable error))failure;
+
+@end
+
 NS_ASSUME_NONNULL_END

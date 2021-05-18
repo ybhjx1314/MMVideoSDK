@@ -8,8 +8,8 @@
 
 #import <Foundation/Foundation.h>
 #import "MDProcessImageProtocol.h"
-#import "MDVideoRenderFilter.h"
 #import "MDVideoDetectorPipline.h"
+#import "MDVideoRender.h"
 
 @class FDKDecoration, FDKBeautySettings;
 
@@ -17,10 +17,11 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface MDVideoRenderPipline : NSObject <MDProcessImageProtocol>
 
-@property (nonatomic, readonly) MDVideoRenderFilter *renderFilter;
+@property (nonatomic, readonly) id<MDVideoRender> renderFilter;
 @property (nonatomic, readonly) MDVideoDetectorPipline *detector;
 
 @property (nonatomic, assign) CGSize outputImageSize;
+@property (nonatomic, assign) CGRect cropRegion;
 
 @property (nonatomic, assign) BOOL canUseAIBeautySetting;
 

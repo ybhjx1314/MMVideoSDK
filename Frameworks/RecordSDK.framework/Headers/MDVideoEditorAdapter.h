@@ -9,12 +9,12 @@
 #import <AVFoundation/AVFoundation.h>
 #import <Foundation/Foundation.h>
 #import "MDRecordFilter.h"
-#import "MDRSpecialFilterLifeStyleProtocol.h"
 #import "MDCancellable.h"
 #import "MDRecordDynamicSticker.h"
+#import "MDRTimeFilter.h"
 
-@class FDKDecoration, CXBeautyConfiguration, GPUImageOutput;
-@protocol MLTimeRangeMappingEffect, GPUImageInput, MDRStickerProtocol;
+@class FDKDecoration;
+@protocol MLTimeRangeMappingEffect, MDRStickerProtocol;
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -75,8 +75,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)enableAIBeauty:(BOOL)enable;
 
-- (void)setBeautyConfiguration:(CXBeautyConfiguration *)configuration;
 - (void)setSkinWhitenValue:(float)value;
+- (void)setSkinRuddyValue:(float)value;
 - (void)setSkinSmoothValue:(float)value;
 - (void)setBeautyBigEyeValue:(float)value;
 - (void)setBeautyThinFaceValue:(float)value;
@@ -94,11 +94,11 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)setGraffitiCanvasImage:(UIImage * _Nullable)graffitiCanvasImage mosaicCanvasImage:(UIImage * _Nullable)mosaicCanvasImage;
 
 - (void)setReverse:(BOOL)reverse;
-- (void)addSpecialFilter:(GPUImageOutput<GPUImageInput, MDRSpecialFilterLifeStyleProtocol> *)newTarget timeRange:(CMTimeRange)range;
+- (void)addSpecialFilter:(id<MDRTimeFilter>)newTarget timeRange:(CMTimeRange)range;
 - (void)deleteLastSpecialFilter;
 - (void)deleteAllSpecialFilters;
 - (void)updateCurrentFilterWithTime:(CMTime)time timeRange:(CMTimeRange)timeRange;
-- (NSArray<GPUImageOutput<GPUImageInput, MDRSpecialFilterLifeStyleProtocol> *> *)specialFilters;
+- (NSArray *)specialFilters;
 - (BOOL)hasSpecialFilter;
 
 - (void)addDynamicSticker:(id<MDRStickerProtocol>)dynamicSticker;
@@ -107,13 +107,17 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)updateDecoration:(FDKDecoration *)decoration;
 - (void)removeDecoration;
 
-@property (nonatomic, assign) CGSize videoDisplaySize;;
+// 按照此大小输出视频，且背景模糊
+@property (nonatomic, assign) CGSize videoDisplaySize;
+
+// 裁剪视频, 归一化到0 - 1, 左上角为(0, 0)
+@property (nonatomic, assign) CGRect cropRegion;
 
 @end
 
 @interface MDVideoEditorAdapter (Export)
 
-@property (nonatomic, strong) UIImage * _Nullable overlayImage;
+- (void)setOverlayImage:(UIImage * _Nullable)overlayImage;
 
 @property (nonatomic, assign) float targetBitRate;
 @property (nonatomic, assign) CGSize presentationSize;

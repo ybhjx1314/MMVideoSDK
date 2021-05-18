@@ -12,17 +12,15 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface MDImageEditorContext : MDMediaEditorContext
 
-- (instancetype)initWithImage:(UIImage *)image completionHander:(void(^)(CVPixelBufferRef _Nullable, NSError * _Nullable))completion;
+- (void)setImage:(UIImage *)image;
 
-- (void)reloadImage:(UIImage *)image;
+@property (nonatomic, copy) void(^completionHandler)(CVPixelBufferRef _Nullable, NSError * _Nullable);
 
 @property (nonatomic, readonly) CIContext *ciContext;
 
 @property (nonatomic, strong) id<MDProcessImageProtocol> filter;
 
 @property (nonatomic, readonly) UIImage *image;
-
-- (void)saveImage:(UIImage *)image completion:(void(^ _Nullable)(NSError * _Nullable))completion;
 
 @end
 

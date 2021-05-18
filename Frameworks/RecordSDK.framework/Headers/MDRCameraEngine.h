@@ -11,11 +11,7 @@
 
 #import <AVFoundation/AVFoundation.h>
 #import "MDRecordFilter.h"
-#import "MDBBGPUImageSlidingFilter.h"
-#import "MDRGift.h"
 
-@class CXBeautyConfiguration;
-@class MDGPUImageMediaFiltersAttachment;
 @class MDRCaptureDeviceCapability;
 @class MDRCapturePreviewConfig;
 @class MDRMediaSegmentInfo;
@@ -29,6 +25,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface MDRCameraEngine : NSObject
 
+@property (nonatomic, weak) id<MDRCameraEngineDelegate> delegate;
 /// 拍摄器的预览视图
 @property (nonatomic, strong, readonly) UIView<MLPixelBufferDisplay> *previewView;
 
@@ -43,9 +40,15 @@ NS_ASSUME_NONNULL_BEGIN
 
 /// 取值范围0.2 - 4.0 默认值为1, 只影响即将录制的片段
 @property (nonatomic, assign) CGFloat speedVaryFactor;
-
+/// 是否保存原始视频, YES 表明保存原始视频， NO 表示保存美颜后视频。 默认为NO
+@property (nonatomic, assign) BOOL saveOrigin;
+@property (nonatomic, assign) BOOL shouldRecordAudio;
+@property (nonatomic, assign) BOOL shouldReverseVideoSample;
 /// 采样帧率，默认30FPS，导出帧率默认和采样帧率一致
 @property (nonatomic, assign) NSInteger captureFrameRate;
+
+/// 使用固定帧率进行渲染
+@property (nonatomic, assign, getter=isFixedFPS) BOOL fixedFPS;
 
 /// 当前采集设备类型
 @property (nonatomic, assign, readonly) MDRCaptureDeviceType currentDeviceType;
@@ -56,10 +59,6 @@ NS_ASSUME_NONNULL_BEGIN
 /// 当前放大的倍数
 @property (nonatomic, assign, readonly) CGFloat currentVideoZoomFactor;
 
-/// 当前的采集源类型
-@property (nonatomic, assign, readonly) MDRecordCameraSourceType currentCameraSourceType;
-
-/// 引擎状态
 @property (nonatomic, assign, readonly) MDRCameraEngineState engineState;
 
 /// 录制片段数组
@@ -70,10 +69,13 @@ NS_ASSUME_NONNULL_BEGIN
 
 /// 变速后实际展示总时长
 @property (nonatomic, assign, readonly) NSTimeInterval currentRecordingPresentDuration;
+/// 是否正在合成视频
+@property (nonatomic, assign, readonly) BOOL stopMerge;
 
 /// 闪光灯
 @property (nonatomic, assign) MDRecordCaptureFlashMode flashMode;
-
+/// 闪光灯模式
+- (NSArray *)supportFlashModes;
 /// 设置背景音乐
 @property (nonatomic, strong, nullable) AVAsset *backgroundAudio;
 
@@ -115,9 +117,11 @@ NS_ASSUME_NONNULL_BEGIN
                       aspectRatio:(MDRRatio)aspectRatio;
 
 
+- (void)startCapturing;
+
 /// 开始预览
 /// @param config 采集预览配置
-- (BOOL)startCaptureWithPreviewConfig:(MDRCapturePreviewConfig * _Nullable)config;
+- (BOOL)startCaptureWithPreviewConfig:(MDRCapturePreviewConfig *)config;
 
 /// 暂停捕获画面
 - (void)pauseCapturing;
@@ -147,20 +151,24 @@ NS_ASSUME_NONNULL_BEGIN
 /// @param factor 放大倍数
 - (void)setVideoZoomFactor:(CGFloat)factor;
 
+- (CGFloat)videoZoomFactor;
 /// 切换采集设备
 /// @param desDeviceType 目标采集设备
 - (BOOL)switchCaptureDeviceType:(MDRCaptureDeviceType)desDeviceType;
 
 /// 切换前后置
 - (BOOL)switchCameraPosition;
-
-/// 普通拍摄和AR拍摄切换
-/// @param cameraSourceType 采集源类型
-- (BOOL)switchToCameraSourceType:(MDRecordCameraSourceType)cameraSourceType;
+/// 获取当前摄像头位置
+@property (nonatomic, assign, readonly) AVCaptureDevicePosition cameraPosition;
+/// 切换分辨率
+/// @param resolutionType 分辨率
+- (BOOL)switchCameraResolutionType:(MDRCaptureResolutionType)resolutionType;
 
 /// 是否有视频输入源
 /// @return YES 有， NO 无
 - (BOOL)hasVideoInput;
+
+@property (nonatomic, readonly) BOOL isRecording;
 
 /// 开始录制
 /// 1.默认视频编码配置：
@@ -179,9 +187,12 @@ NS_ASSUME_NONNULL_BEGIN
 /// @param flag  录制选项
 - (BOOL)startRecordingWithFlag:(MDRRecordingFlagOption)flag;
 
+- (BOOL)hasDetectorBareness;
+@property (nonatomic, copy) void(^ _Nullable detectBareness)(void) ;
+
 ///  开始录制
 /// @param flag  录制选项
-/// @param params 编码参数配置
+/// @param params 编码参数配置，更多参数配置请参考 MDRCommonDefine.h
 /// 例如：
 /// NSMutableDictionary *encodeParams = [[NSMutableDictionary alloc] init];
 /// encodeParams[MDRVideoEncodeFrameRateKey] = @15;      //15FPS
@@ -212,6 +223,8 @@ NS_ASSUME_NONNULL_BEGIN
 /// 导出的格式为mp4，后面会开放更多配置
 /// @param completionHandler 导出视频的回调
 - (void)exportVideoWithCompletionHandler:(void (^)(NSURL * _Nullable videoFileURL, NSError * _Nullable error))completionHandler;
+/// 获得分段数量
+- (NSInteger)savedSegmentCount;
 
 /// 删除最新录制的一段，多次调用，直到删除所有已录制的视频
 - (void)deleteLastSavedSegment;
@@ -235,11 +248,6 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface MDRCameraEngine (Effect)
 
-/// 设置滤镜切换动画方向(横向或者纵向), 需要在 setupRecorder 之前调用
-/// @param mode  MDRGPUImageSlidingFilterModeHorizontal :水平方向
-///             MDRGPUImageSlidingFilterModeVertical :竖直方向
-- (void)configSlidingFilterMode:(MDRGPUImageSlidingFilterMode)mode;
-
 /// 设置滤镜
 /// @param filter 滤镜对象
 - (void)configCurrentFilter:(MDRecordFilter *)filter;
@@ -249,12 +257,6 @@ NS_ASSUME_NONNULL_BEGIN
 /// @param filterB 滤镜b
 /// @param offset 所占百分比
 - (void)configFilterA:(MDRecordFilter *)filterA configFilterB:(MDRecordFilter *)filterB offset:(float)offset;
-
-
-/// 滤镜链插槽，canUseAIBeautySetting 为 false 有效。每次配置FDKDecoration后调用一次，不可重复调用。
-/// 待完善：xxx版本以后可用
-/// @param filtersAttachment filtersAttachment
-- (void)configDecorationFilterAttachment:(MDGPUImageMediaFiltersAttachment *)filtersAttachment;
 
 /// 切换美颜/滤镜贴纸。     待完善：如果decoration里有美颜，和默认的美颜之间的设置逻辑
 /// @param decoration FDKDecoration对象
@@ -267,21 +269,6 @@ NS_ASSUME_NONNULL_BEGIN
 /// @param volume 待完善：取值范围以及具体释义
 - (void)adjustStikcerVolume:(float)volume;
 
-/// 添加礼物，可多张叠加。     待完善： 使用建议：不要多余多少个，影响性能
-/// @param gift 礼物对象
-- (void)addGift:(MDRGift *)gift;
-
-/// 移除礼物
-/// @param gift 礼物对象
-- (void)removeGift:(MDRGift *)gift;
-
-/// 通过ID移除礼物对象
-/// @param giftID 礼物id
-- (void)removeGiftWithGiftID:(NSString *)giftID;
-
-/// 清空所有礼物
-- (void)clearAllGifts;
-
 /// 是否开启光膀子检测
 /// @param enable rue 开启  false 不开启
 - (void)activateBarenessDetectorEnable:(BOOL)enable;
@@ -290,9 +277,13 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, copy) void(^ _Nullable faceFeatureHandler)(CVPixelBufferRef _Nonnull pixelbuffer, NSArray<MMFaceFeature *> * _Nullable faceFeatures, NSArray<MMBodyFeature *> * _Nullable bodyFeatures)
 DEPRECATED_MSG_ATTRIBUTE("use didOutputFaceFeatureInfo");
 
+/// 人脸关键信息回调
+/// @param cameraEngineC引擎对象
+/// @param faceFeatureInfo 人脸特征信息
+- (void)cameraEngine:(MDRCameraEngine *)cameraEngine didOutputFaceFeatureInfo:(MDRFaceFeatureInfo *)faceFeatureInfo;
 
 /**
- 是否使用AI美颜功能   待完善:  建议iOS 10以上开启，还是只能iOS10以上开启？
+ 是否使用AI美颜功能
  
  x.x.x版本以后可用      2.2.9版本建议使用useAIBigEyeThinFace
                       useAISkinWhiten  useAISkinSmooth 代替
@@ -308,25 +299,20 @@ DEPRECATED_MSG_ATTRIBUTE("use didOutputFaceFeatureInfo");
 /// 是否检测到人脸
 @property (nonatomic, readonly) BOOL isFaceCaptured;
 
-/// 清除贴纸缓存 ？？ 待完善
+/// 清除贴纸缓存
 - (void)clean;
 
-/// 清除检测器状态 ？？  待完善
+/// 清除检测器状态
 - (void)resetState;
 
-@end
 
-
-@interface MDRCameraEngine (BeautySetting)
-
-/// 待完善    CXBeautyConfiguration
-///此对象+ (nullable instancetype)beautyConfigurationFromJSONObject:(id)JSONObject error:(NSError **)error;JSONObject？？？
-/// @param config
-- (void)setBeautyConfiguration:(CXBeautyConfiguration *)config;
-
-/// 设置美白值    如果使用了AI美颜，建议取值范围设置到0-0.8
+/// 设置美白值    如果使用了AI美颜，建议取值范围设置到0-1.0
 /// @param value 取值范围0-1，默认：待完善
 - (void)setSkinWhitenValue:(float)value;
+
+/// 设置红润值    如果使用了AI美颜，建议取值范围设置到0-1.0
+/// @param value 取值范围0-1，默认：待完善
+- (void)setSkinRuddyValue:(float)value;
 
 /// 设置磨皮值    如果使用了AI美颜，建议取值范围设置到0-0.8
 /// @param value 取值范围0-1，默认：待完善
@@ -348,13 +334,24 @@ DEPRECATED_MSG_ATTRIBUTE("use didOutputFaceFeatureInfo");
 /// @param value 取值范围0-1，默认：待完善
 - (void)setBeautyLenghLegValue:(float)value;
 
-@end
-
-@interface MDRCameraEngine (XESEngin)
 
 /// 启动3D引擎
 /// @param path 但完善：参数释义
 - (void)runXESEngineWithDecorationRootPath:(NSString *)path;
+
+@end
+
+@interface MDRCameraEngine (TouchEvent)
+
+- (BOOL)hitTestTouch:(CGPoint)point withView:(UIView *)view;
+
+- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event;
+
+- (void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event;
+
+- (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event;
+
+- (void)touchesCancelled:(NSSet *)touches withEvent:(UIEvent *)event;
 
 @end
 

@@ -22,8 +22,10 @@ typedef NS_OPTIONS(NSUInteger, MDRFaceDetectorModuleOptions) {
     MDRFaceDetectorModuleObject = 1 << 4,            // 肢体检测器
     MDRFaceDetectorModuleHandGesture = 1 << 5,       // 手势检测器
     MDRFaceDetectorModuleBareness = 1 << 6,          // 光膀子检测器
+    MDRFaceDetectorModuleFaceSegment = 1 << 7,          // 人脸分割器
+    MDRFaceDetectorModuleAttractivenessAnalyzer = 1 << 8, // 颜值分析
     
-    MDRFaceDetectorModuleAll = MDRFaceDetectorModuleFace | MDRFaceDetectorModuleBody | MDRFaceDetectorModuleAnimoji | MDRFaceDetectorModuleImageSegment | MDRFaceDetectorModuleObject | MDRFaceDetectorModuleHandGesture | MDRFaceDetectorModuleBareness,
+    MDRFaceDetectorModuleAll = MDRFaceDetectorModuleFace | MDRFaceDetectorModuleBody | MDRFaceDetectorModuleAnimoji | MDRFaceDetectorModuleImageSegment | MDRFaceDetectorModuleObject | MDRFaceDetectorModuleHandGesture | MDRFaceDetectorModuleBareness | MDRFaceDetectorModuleFaceSegment | MDRFaceDetectorModuleAttractivenessAnalyzer,
 };
 
 @protocol MDRFaceDetectorModuleProtocol <NSObject>

@@ -35,7 +35,6 @@
 
 @interface MDRecordCameraAdapter : NSObject
 
-@property (nonatomic,assign,readonly) MDRecordCameraSourceType       sourceType;
 @property (nonatomic,assign,readonly) AVCaptureDevicePosition  devicePosition;
 @property (nonatomic,assign,readonly) AVCaptureDevice          *currentDevice;
 @property (nonatomic,assign,readonly) AVCaptureConnection      *captureConnection;
@@ -43,10 +42,7 @@
 
 @property (nonatomic,weak) id<MDRecordCameraAdapterDelegate> delegate;
 
-- (instancetype)initWithCameraSourceType:(MDRecordCameraSourceType)sourceType
-                           configuration:(MDRecordCameraAdapterConfigure *)config;
-
-- (void)switchToCameraSourceType:(MDRecordCameraSourceType)sourceType;
+- (instancetype)initWithCameraConfiguration:(MDRecordCameraAdapterConfigure *)config;
 
 - (void)startCapturing;
 - (void)stopCapturing;

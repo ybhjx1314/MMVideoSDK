@@ -22,13 +22,13 @@
 /// 设备类型 default: MDRCaptureDeviceType_Front
 @property (nonatomic,assign) MDRCaptureDeviceType deviceType;
 
-/// 采集类型 default: MDRecordCameraSourceType_CaptureSession
-@property (nonatomic,assign) MDRecordCameraSourceType cameraSourceType;
-
 /// 缩放比列，预览缩放比例，以最短边为基准算长边， default: MDRRatioZero, 以分辨率的比例为准
 @property (nonatomic, assign) MDRRatio aspectRatio;
 
 /// 实际的采集分辨率大小， resolutionType(对应的分辨率值) * aspectRatio
 @property (nonatomic, assign, readonly) MDRVideoResolution captureResolutionValue;
+
+/// 使用固定帧率进行渲染
+@property (nonatomic, assign, getter=isFixedFPS) BOOL fixedFPS;
 
 @end

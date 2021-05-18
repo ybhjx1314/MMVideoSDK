@@ -6,7 +6,7 @@
 //
 
 #import <Foundation/Foundation.h>
-@import FaceDecorationKitGPUImage;
+#import <FaceDecorationKitMetalPetal/FaceDecorationKitMetalPetal.h>
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -16,10 +16,15 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nonatomic, assign) CMTimeRange duration;
 
-- (FDKDecorationFilter *)makeFilter;
+- (FDKMDecorationFilter *)makeMetalFilter;
 - (void)update;
 
 - (CGSize)stickerSize;
+
+- (CGPoint)center;
+- (CGFloat)roll;
+- (NSString *)type;
+- (CGRect)bounds;
 
 @end
 

@@ -11,6 +11,10 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface PHPhotoLibrary (MDSaveAsset)
 
++ (void)savePhotoAtPath:(NSURL *)path
+        toAlbumWithName:(NSString *)albumName
+             completion:(void(^ _Nullable)(PHFetchResult<PHAsset *> * _Nullable, NSError * _Nullable))completion;
+
 + (void)savePhoto:(UIImage *)image toAlbumWithName:(NSString *)albumName completion:(void(^ _Nullable)(PHFetchResult<PHAsset *> * _Nullable, NSError * _Nullable))completion;
 
 + (void)savePhotos:(NSArray<UIImage *> *)images toAlbumWithName:(NSString *)albumName completion:(void(^ _Nullable)(PHFetchResult<PHAsset *> * _Nullable, NSError * _Nullable))completion;

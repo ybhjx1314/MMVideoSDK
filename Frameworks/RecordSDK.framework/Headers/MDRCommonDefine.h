@@ -22,6 +22,8 @@ typedef NS_ENUM(NSInteger, MDRCameraWarningCode) {
     MDRCameraWarningCode_CameraDeviceConfigureFail, //设备配置出错
     MDRCameraWarningCode_RecordingFail, //录制失败
     MDRCameraWarningCode_VideoExportNotWorking, //录制失败
+	
+	MDRCameraWarningCode_LoadDetector, 			// 加载检测模型失败
 };
 
 typedef NS_ENUM(NSInteger, MDRCaptureResolutionType) {
@@ -47,18 +49,12 @@ typedef NS_ENUM(NSInteger, MDRRecordingFlagOption) {
     MDRRecordingFlagOption_None = 0,
     MDRRecordingFlagOption_DisableAudio = 1 << 0,     //不编码音频 （SDK内部会和MDRCaptureFlagOption_DisableAudio同步）
     MDRRecordingFlagOption_ReverseVideo = 1 << 1,     //水平镜像输出
-    MDRRecordingFlagOption_DisableAllEffects = 1 << 2, //屏蔽所有动效
+    MDRRecordingFlagOption_DisableAllEffects = 1 << 2, //屏蔽所有特效
 };
 
 typedef NS_ENUM(NSInteger, MDRCaptureDeviceType) {
     MDRCaptureDeviceType_Front  = 0,
     MDRCaptureDeviceType_Back = 1,
-};
-
-typedef NS_ENUM(NSUInteger, MDRecordCameraSourceType)
-{
-    MDRecordCameraSourceType_captureSession,    //普通拍摄
-    MDRecordCameraSourceType_ARKIT              //AR拍摄
 };
 
 typedef NS_ENUM(NSInteger, MDRCameraEngineState) {

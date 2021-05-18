@@ -6,12 +6,15 @@
 //
 
 #import "MDRFaceDetectorInfo.h"
+#import <CoreMedia/CoreMedia.h>
 
 NS_ASSUME_NONNULL_BEGIN
 
 @interface MDRFaceDetectorInfo (FDKUpdateRequest)
 
-@property (nonatomic, readonly) FDKDecorationFilterUpdateRequest *request;
+- (FDKDecorationFilterUpdateRequest *)request;
+
+- (FDKDecorationFilterUpdateRequest *)requestAtFrameTime:(CMTime)frameTime;
 
 @end
 

@@ -11,7 +11,6 @@
 #import <CoreGraphics/CoreGraphics.h>
 #import "MDVideoExportProtocol.h"
 #import "MDProcessImageProtocol.h"
-#import "MDAssetProcessProtocol.h"
 
 NS_ASSUME_NONNULL_BEGIN
 

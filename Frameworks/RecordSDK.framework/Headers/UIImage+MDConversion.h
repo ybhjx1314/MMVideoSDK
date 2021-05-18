@@ -12,7 +12,6 @@ NS_ASSUME_NONNULL_BEGIN
 @interface UIImage (MDConversion)
 
 - (CVPixelBufferRef)pixelBuffer;
-- (CVPixelBufferRef)pixelBufferUsingContext:(CIContext * _Nullable)context;
 
 + (UIImage *)imageFromPixelBuffer:(CVPixelBufferRef)pixelBuffer context:(CIContext * _Nullable)context;
 

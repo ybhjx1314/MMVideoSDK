@@ -7,7 +7,8 @@
 
 #import <Foundation/Foundation.h>
 #import "MDRecordLoggerKey.h"
-#import "MDRCommonDefine.h"
+
+typedef NSInteger MDRErrorCode;
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -36,7 +37,7 @@ typedef NS_ENUM(NSUInteger, MDRAnalyticsType) {
 
 // error
 + (void)reportError:(NSError *)error;
-+ (void)reportError:(NSError *)error cameraErrorCode:(MDRCameraErrorCode)cameraErrorCode;
++ (void)reportError:(NSError *)error cameraErrorCode:(MDRErrorCode)cameraErrorCode;
 
 @end
 

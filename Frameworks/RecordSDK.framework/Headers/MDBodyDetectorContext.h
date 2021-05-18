@@ -7,7 +7,7 @@
 
 #import <Foundation/Foundation.h>
 #import "MDImageDetectorProtocol.h"
-@import MomoCV;
+#import <MomoCV/MomoCV.h>
 
 NS_ASSUME_NONNULL_BEGIN
 

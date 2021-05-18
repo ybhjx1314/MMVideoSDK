@@ -18,7 +18,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, copy) AVLayerVideoGravity videoGravity;
 @property (nonatomic, assign) NSInteger preferredFramesPerSecond;
 
-@property (nonatomic,strong,nullable) NSOperationQueue *renderQueue;
+@property (nonatomic, strong,nullable) NSOperationQueue *renderQueue;
 
 - (CGRect)videoRenderFrame;
 

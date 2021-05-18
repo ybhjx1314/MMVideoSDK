@@ -56,7 +56,7 @@ didASegmentGenerateFailType:(MDRSegmentGenerateFailType)failType;
 /// 视频数据回调
 /// @param cameraEngine 引擎对象
 /// @param sampleBuffer 视频buffer
-- (void)cameraEngine:(MDRCameraEngine *)cameraEngine didOutputVideoSampleBuffer:(CVPixelBufferRef)sampleBuffer;
+- (void)cameraEngine:(MDRCameraEngine *)cameraEngine didOutputVideoSampleBuffer:(CMSampleBufferRef)sampleBuffer;
 
 /// 音频裸数据回调
 /// @param cameraEngine 引擎对象
