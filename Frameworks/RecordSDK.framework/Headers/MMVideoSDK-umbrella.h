@@ -52,6 +52,7 @@
 #import "MDRAudioDisplayModuleProtocol.h"
 #import "MDRCapturePreviewConfig+CaptureSession.h"
 #import "MDRCameraEngine.h"
+#import "MDRecordingAdapter.h"
 #import "MDRPixelBufferCache.h"
 #import "MDRAudioEncodeParam.h"
 #import "MDRCameraEngineDelegate.h"
