@@ -18,6 +18,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong) id<MDProcessImageProtocol, FDKDecorationFilterUpdating> filter;
 @property (nonatomic, strong) id<MDImageDetectorProtocol> detector;
 
+- (void)resetDetector;
+
 @end
 
 NS_ASSUME_NONNULL_END

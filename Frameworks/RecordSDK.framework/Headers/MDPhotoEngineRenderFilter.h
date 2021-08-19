@@ -7,10 +7,11 @@
 
 #import <Foundation/Foundation.h>
 #import "MDRPhotoRender.h"
+#import "MDRRenderModuleProtocol.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface MDPhotoEngineRenderFilter : NSObject <MDRPhotoRender>
+@interface MDPhotoEngineRenderFilter : NSObject <MDRPhotoRender,MDRRenderMakeUpModule>
 
 @end
 

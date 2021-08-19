@@ -27,6 +27,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nonatomic, assign) BOOL advancedStabilizationModeEnabled;
 
+@property (nonatomic, assign) NSUInteger skipFrameCount;
+
 @end
 
 @interface MDFace137DetectorContext: MDFaceDetectorContext
@@ -38,6 +40,10 @@ NS_ASSUME_NONNULL_BEGIN
 @end
 
 @interface MDFaceLocalDetectorContext : MDFaceDetectorContext
+
+@end
+
+@interface MDFace222DetectorContext : MDFaceDetectorContext
 
 @end
 

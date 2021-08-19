@@ -11,8 +11,7 @@
 #import "MDRXEngineModuleProtocol.h"
 
 NS_ASSUME_NONNULL_BEGIN
-
-@interface MDREngineRenderModule : NSObject <MDRRenderModuleProtocol, MDRRenderModuleInput, MDRFiltersModuleProtocol, MDRXEngineModuleProtocol, MDRRenderModuleTouchEvent>
+@interface MDREngineRenderModule : NSObject <MDRRenderModuleProtocol, MDRRenderModuleInput, MDRFiltersModuleProtocol, MDRXEngineModuleProtocol, MDRRenderModuleTouchEvent,MDRRenderMakeUpModule>
 
 @end
 

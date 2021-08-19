@@ -32,9 +32,6 @@ NS_ASSUME_NONNULL_BEGIN
 
 /// 媒体片段合并导出回调
 - (void)mergeAllSegmentsWithCompletionHandler:(void (^)(NSURL * _Nullable videoFileURL, NSError * _Nullable error))completionHandler;
-
-
-
 /// 停止多段合并的导出
 - (void)stopMergeAllSegments;
 

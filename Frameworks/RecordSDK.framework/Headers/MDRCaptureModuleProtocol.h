@@ -38,6 +38,7 @@ didOutputAudioSampleBuffer:(CMSampleBufferRef)audioSampleBuffer;
 @end
 
 @protocol MDRCaptureModuleProtocol <NSObject>
+
 - (void)bindDelegate:(id<MDRCaptureModuleDelegate> _Nullable)delegate;
 
 /// 开始预览，内部会初始化captureSession
@@ -59,10 +60,8 @@ didOutputAudioSampleBuffer:(CMSampleBufferRef)audioSampleBuffer;
 - (void)updateExposureTargetBias:(float)bias;
 
 - (void)setVideoZoomFactor:(CGFloat)factor;
-- (CGFloat)videoZoomFactor;
 
 - (void)setCameraFlashMode:(MDRecordCaptureFlashMode)flashMode;
-- (MDRecordCaptureFlashMode)flashMode;
 
 /// 根据人脸信息更新自动对焦
 - (void)updateAutoFocusCameraFaceTracking:(MDRRecordAutoFocusCameraFaceTracking)face;
@@ -71,13 +70,6 @@ didOutputAudioSampleBuffer:(CMSampleBufferRef)audioSampleBuffer;
 - (void)autoConfigAudioSessionDisable:(BOOL)disable;
 
 - (BOOL)hasVideoInput;
-
-
-- (BOOL)hasFlash;
-- (NSArray *)supportFlashModes;
-
-
-
 
 @end
 

@@ -7,10 +7,10 @@
 
 #import <Foundation/Foundation.h>
 #import "MDVideoRender.h"
-
+#import "MDRRenderModuleProtocol.h"
 NS_ASSUME_NONNULL_BEGIN
 
-@interface MDVideoEngineRenderFilter : NSObject <MDVideoRender>
+@interface MDVideoEngineRenderFilter : NSObject <MDVideoRender,MDRRenderMakeUpModule>
 
 @end
 

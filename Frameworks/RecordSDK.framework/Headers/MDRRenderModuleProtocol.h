@@ -8,7 +8,8 @@
 #import <Foundation/Foundation.h>
 #import "MDRCommonDefine.h"
 #import <AVFoundation/AVFoundation.h>
-
+#import <LightningRender/XEngineRender.h>
+#import "MDRRenderBeautyKey.h"
 NS_ASSUME_NONNULL_BEGIN
 
 @class MDRFaceDetectorInfo;
@@ -61,6 +62,35 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event;
 
 - (void)touchesCancelled:(NSSet *)touches withEvent:(UIEvent *)event;
+
+@end
+
+@protocol MDRRenderMakeUpModule <NSObject>
+
+// 美妆、风格妆
+/// 添加美妆子项或整装风格妆
+/// @params makeupEffect 美妆资源路径
+- (void)addMakeupEffect:(NSString *)makeupEffect;
+
+/// 设置美妆强度
+/// @params intensity 强度 [0-1]
+/// @params makeupType 美妆子项类型
+- (void)setMakeupEffectIntensity:(CGFloat)intensity makeupType:(XEngineMakeupKey)makeupType;
+
+/// 按美妆子项移除美妆
+/// @params makeupType 美妆子项类型
+- (void)removeMakeupEffectWithType:(XEngineMakeupKey)makeupType;
+
+/// 移除所有美妆效果
+- (void)removeAllMakeupEffect;
+
+// 设置微整形 参见 MDRRenderBeautyKey
+- (void)adjustBeauty:(CGFloat)value forKey:(MDRMicroSurgeryType)key;
+
+- (void)setRenderStatus:(BOOL)status;
+
+/// 美妆效果是否生效
+- (BOOL)isMakeupEffectActive;
 
 @end
 

@@ -9,7 +9,6 @@
 #import <FaceDecorationKit/FaceDecorationKit.h>
 #import "MDProcessImageProtocol.h"
 #import "MDRecordFilter.h"
-
 NS_ASSUME_NONNULL_BEGIN
 
 @protocol MDRPhotoRender <MDProcessImageProtocol, FDKDecorationFilterUpdating>

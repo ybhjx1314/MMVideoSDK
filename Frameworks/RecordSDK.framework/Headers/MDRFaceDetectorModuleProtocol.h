@@ -55,6 +55,9 @@ typedef NS_OPTIONS(NSUInteger, MDRFaceDetectorModuleOptions) {
 /// 手势检测类型
 @property (nonatomic, assign) NSUInteger handGestureType;
 
+// 跳帧设置
+@property (nonatomic, assign) NSUInteger detectorSkipFrame;
+
 @end
 
 NS_ASSUME_NONNULL_END

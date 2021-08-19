@@ -83,6 +83,28 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)setBeautyThinBodyValue:(float)value;
 - (void)setBeautyLenghLegValue:(float)value;
 
+// 美妆、风格妆
+/// 添加美妆子项或整装风格妆
+/// @params makeupEffect 美妆资源路径
+- (void)addMakeupEffect:(NSString *)makeupEffect;
+
+/// 设置美妆强度
+/// @params intensity 强度 [0-1]
+/// @params makeupType 美妆子项类型
+- (void)setMakeupEffectIntensity:(CGFloat)intensity makeupType:(NSString *)makeupType;
+
+/// 按美妆子项移除美妆
+/// @params makeupType 美妆子项类型
+- (void)removeMakeupEffectWithType:(NSString *)makeupType;
+
+/// 移除所有美妆效果
+- (void)removeAllMakeupEffect;
+
+// 设置微整形 参见 MDRRenderBeautyKey
+- (void)adjustBeauty:(CGFloat)value forKey:(NSString *)key;
+
+- (void)setRenderStatus:(BOOL)status;
+
 @end
 
 @interface MDVideoEditorAdapter (Filter)
