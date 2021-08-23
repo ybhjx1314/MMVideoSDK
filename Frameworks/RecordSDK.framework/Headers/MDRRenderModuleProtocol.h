@@ -8,7 +8,7 @@
 #import <Foundation/Foundation.h>
 #import "MDRCommonDefine.h"
 #import <AVFoundation/AVFoundation.h>
-#import <LightningRender/XEngineRender.h>
+#import "XEngineRender.h"
 #import "MDRRenderBeautyKey.h"
 NS_ASSUME_NONNULL_BEGIN
 

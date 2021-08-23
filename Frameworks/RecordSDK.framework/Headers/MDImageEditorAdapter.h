@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "MDRecordFilter.h"
 
-#import <LightningRender/XEngineRender.h>
+#import "XEngineRender.h"
 #import "MDRRenderBeautyKey.h"
 
 @class FDKDecoration;

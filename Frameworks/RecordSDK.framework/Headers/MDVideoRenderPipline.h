@@ -14,7 +14,7 @@
 
 #import "MDRRenderBeautyKey.h"
 
-#import <LightningRender/XEngineRender.h>
+#import "XEngineRender.h"
 
 @class FDKDecoration, FDKBeautySettings;
 
